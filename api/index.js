@@ -3,17 +3,22 @@ import mongoose from 'mongoose'
 import cors from 'cors'
 import userRouter from './routes/user.route.js'
 import authRouter from './routes/auth.route.js'
+import dotenv from 'dotenv'
+
+dotenv.config()
+
 
 
 const app = express()
-const MONGO_STRING = process.env.MONGO_STRING
+const MONGO = process.env.MONGO
 
-app.listen('4000', ()=>{
+
+app.listen(4000, ()=>{
     console.log("app listening")
 })
 
 
-mongoose.connect(MONGO_STRING).then(()=>{}).catch(()=>{console.log("something went wrong connecting MONGOOSE")})
+mongoose.connect(process.env.MONGO).then(()=>{console.log("mongoose connected")}).catch((err)=>{console.log(err, "something went wrong connecting MONGOOSE")})
 
 //middlewares
 
