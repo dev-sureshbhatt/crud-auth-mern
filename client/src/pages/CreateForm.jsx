@@ -7,6 +7,7 @@ export default function CreateForm() {
 
   function addQuestion() {
     const fields = {
+        "number": formContent.length,
         "name": `question_${formContent.length}`,
         "label": "untitled_question",
         "type": "short_answer",
@@ -33,7 +34,7 @@ export default function CreateForm() {
                     return(
                         <div>
                         <div key={item.name}>
-                        <p>{formContent.length}</p>
+                        <p>{item.number+1}</p>
                         <p>{item.label}</p>
                         </div>
                         <div>
