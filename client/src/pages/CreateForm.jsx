@@ -2,7 +2,8 @@ import React, { useState } from "react";
 
 export default function CreateForm() {
   const [formContent, setFormContent] = useState([]);
-  const [isEdit, setisEdit] = useState(false)
+  const [isEdit, setisEdit] = useState(false);
+  const [multichoiceOption, setMultichoiceOption] = useState("add an option")
 
   function addQuestion() {
     const fields = {
@@ -10,34 +11,44 @@ export default function CreateForm() {
       name: `question_${formContent.length}`,
       label: "untitled_question (Click to edit)",
       type: "short_answer",
-      list: [1,2,3],
+      list: [],
     };
     setFormContent([...formContent, fields]);
   }
 
-
-  function questionEdit(questionNumber, questionValue){
+  function questionEdit(questionNumber, questionValue) {
     // console.log(questionNumber, questionValue)
-    const formFields = [...formContent]
+    const formFields = [...formContent];
     // console.log("form field is", formFields)
-    const fieldIndex = formFields.findIndex(f => f.name == questionNumber)
+    const fieldIndex = formFields.findIndex((f) => f.name == questionNumber);
     // console.log(formFields[fieldIndex])
-    formFields[fieldIndex].label = questionValue
-    setFormContent(formFields)
+    formFields[fieldIndex].label = questionValue;
+    setFormContent(formFields);
     // console.log(formFields)
-
   }
 
-  function questionTypeEdit(questionNumber, questionType){
-    const formFields = [...formContent]
+  function questionTypeEdit(questionNumber, questionType) {
+    const formFields = [...formContent];
     // console.log("new formfield", formFields, questionNumber, questionType)
-    const findIndex = formFields.findIndex(f => f.name === questionNumber)
-    formFields[findIndex].type = questionType
-    setFormContent(formFields)
-    console.log(formFields)
+    const findIndex = formFields.findIndex((f) => f.name === questionNumber);
+    formFields[findIndex].type = questionType;
+    setFormContent(formFields);
+    console.log(formFields);
   }
 
-  
+
+  function addMultichoiceFieldOptions(questionNumber, optionValue){
+
+    const formFields = [...formContent];
+    // console.log("new formfield", formFields, questionNumber, questionType)
+    const findIndex = formFields.findIndex((f) => f.name === questionNumber);
+    formFields[findIndex].list.push(optionValue)
+    setFormContent(formFields);
+    console.log(formFields);
+
+
+
+  }
 
 
 
@@ -55,18 +66,28 @@ export default function CreateForm() {
                 <div className="flex justify-between space-y-6 items-center">
                   <div className="flex gap-2 items-center" key={item.name}>
                     <p>{`Q${item.number + 1}.`}</p>
-                    {
-                        isEdit ? 
-                        <input onChange={(e)=>questionEdit(item.name, e.target.value)} onBlur={()=>setisEdit(false)} className="border p-2" type="text" placeholder={item.label}/>
-                        :
-                        <label onClick={()=>setisEdit(true)} >{item.label}</label>
-            
-                        
-                    }
-                    
+                    {isEdit ? (
+                      <input
+                        onChange={(e) =>
+                          questionEdit(item.name, e.target.value)
+                        }
+                        onBlur={() => setisEdit(false)}
+                        className="border p-2"
+                        type="text"
+                        placeholder={item.label}
+                      />
+                    ) : (
+                      <label onClick={() => setisEdit(true)}>
+                        {item.label}
+                      </label>
+                    )}
                   </div>
                   <div>
-                    <select onChange={(e)=>questionTypeEdit(item.name, e.target.value)}>
+                    <select
+                      onChange={(e) =>
+                        questionTypeEdit(item.name, e.target.value)
+                      }
+                    >
                       <option value="short_answer">Short Answer</option>
                       <option value="paragraph">Paragraph</option>
                       <option value="multichoice">Multichoice</option>
@@ -87,15 +108,18 @@ export default function CreateForm() {
                       placeholder={item.label}
                     />
                   )}
-                  {item.type == "multichoice" && 
-
-
-                  
+                  {item.type == "multichoice" && (<div>
                     <select className="focus:outline-none border p-3 rounded-lg w-1/2 shadow-sm">
-                        {item.list.map((fielditems)=>{
-                            <option value={fielditems}>{fielditems}</option>
-                        })}
-                    </select>}
+                      {item.list.map((fielditems) => {
+                        <option value={fielditems}>{fielditems}</option>;
+                      })}
+                    </select>
+                    <div className="flex gap-4 mt-2">
+                        <input onChange={(e)=>setMultichoiceOption(e.target.value)} className="border shadow-md p-2" type="text" placeholder={multichoiceOption} />
+                        <button onClick={()=>addMultichoiceFieldOptions(item.name, multichoiceOption)} className="bg-black text-white p-2 ">Add</button>
+                    </div>
+                    </div>
+                  )}
                 </div>
               </div>
             );
