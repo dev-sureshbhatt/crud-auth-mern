@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 export default function CreateForm() {
   const [formContent, setFormContent] = useState([]);
+  const [isEdit, setisEdit] = useState(false)
 
   function addQuestion() {
     const fields = {
@@ -12,6 +13,11 @@ export default function CreateForm() {
       list: [1,2,3],
     };
     setFormContent([...formContent, fields]);
+  }
+
+
+  function enableQuestionEdit(){
+
   }
 
   return (
@@ -26,9 +32,17 @@ export default function CreateForm() {
             return (
               <div>
                 <div className="flex justify-between space-y-6 items-center">
-                  <div className="flex gap-1" key={item.name}>
+                  <div onClick={enableQuestionEdit} className="flex gap-1" key={item.name}>
                     <p>{item.number + 1}</p>
-                    <p>{item.label}</p>
+                    {
+                        isEdit ? 
+                        <input className="border p-2" type="text" placeholder={item.label}/>
+                        :
+                        <label onClick={()=>setisEdit(true)}>{item.label}</label>
+            
+                        
+                    }
+                    
                   </div>
                   <div>
                     <select>
