@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 
 export default function SignIn() {
   const [formData, setFormData] = useState({})
   const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
 
   function handleChange(ev){
@@ -31,6 +32,9 @@ export default function SignIn() {
 
     sendData.json().then((data)=>{
       alert(data.msg)
+      if (data.success === "true") {
+        navigate('/create-form')
+      }
       
     })
 

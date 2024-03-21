@@ -47,10 +47,11 @@ export default function CreateForm() {
     setFormContent(formFields);
     console.log(formFields);
     
+  }
 
 
-
-
+  function handleSubmit(){
+    console.log(formContent)
   }
 
 
@@ -135,6 +136,8 @@ export default function CreateForm() {
         >
           Add Question
         </button>
+        <button onClick={handleSubmit} className="bg-green-500 w-full text-white p-3 mt-7 mx-auto rounded-md">{"Create Form >>"}</button>
+
       </div>
     </div>
   );
