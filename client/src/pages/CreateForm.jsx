@@ -25,9 +25,19 @@ export default function CreateForm() {
     formFields[fieldIndex].label = questionValue
     setFormContent(formFields)
     // console.log(formFields)
-    
 
   }
+
+  function questionTypeEdit(questionNumber, questionType){
+    const formFields = [...formContent]
+    // console.log("new formfield", formFields, questionNumber, questionType)
+    const findIndex = formFields.findIndex(f => f.name === questionNumber)
+    formFields[findIndex].type = questionType
+    setFormContent(formFields)
+    console.log(formFields)
+  }
+
+  
 
 
 
@@ -56,7 +66,7 @@ export default function CreateForm() {
                     
                   </div>
                   <div>
-                    <select>
+                    <select onChange={(e)=>questionTypeEdit(item.name, e.target.value)}>
                       <option value="short_answer">Short Answer</option>
                       <option value="paragraph">Paragraph</option>
                       <option value="multichoice">Multichoice</option>
