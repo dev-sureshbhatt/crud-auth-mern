@@ -12,11 +12,11 @@ export const signup = async (req, res) => {
         })
         
 
-        res.status(201).json({"msg": "User created successfully"})    
+        res.status(201).json({"msg": "User created successfully", "success":"true"})    
     } catch (error) {
-        if (error.code == 11000) {res.status(409).json({"msg":"Cannot register - email already exists"})}
+        if (error.code == 11000) {res.status(409).json({"msg":"Cannot register - email already exists", "success":"false"})}
         else 
-        res.status(500).json({"msg":"Something went wrong, try again"})
+        res.status(500).json({"msg":"Something went wrong, try again", "success":"false"})
     }
 
     
@@ -33,13 +33,13 @@ export const login = async (req,res) => {
         const {email, password} = req.body
         const isUser = await User.findOne({email})
         if (!isUser) {
-            res.status(401).json({"msg":"User doesn't exist"})
+            res.status(401).json({"msg":"User doesn't exist", "success":"false"})
         }
 
         else {
             if(bcryptjs.compareSync(password, isUser.password)){
-            res.status(200).json({"msg":"You are now logged in"})
-            } else res.status(401).json({"msg":"Password is incorrect"})
+            res.status(200).json({"msg":"You are now logged in", "success":"true"})
+            } else res.status(401).json({"msg":"Password is incorrect", "success":"false"})
         }
 
         
