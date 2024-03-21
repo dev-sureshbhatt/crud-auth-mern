@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 
 export default function SignUp() {
   const [formData, setFormData] = useState({})
+  const [loading, setLoading] = useState(false)
 
   function handleChange(ev){
     setFormData({
@@ -14,6 +15,7 @@ export default function SignUp() {
 
   async function handleSubmit(ev){
     ev.preventDefault()
+    setLoading(true)
 
     try {
     
@@ -29,9 +31,10 @@ export default function SignUp() {
       alert(data.msg)
     })
 
-
+setLoading(false)
     } catch (error) {
-console.log(error)      
+      setLoading(false)
+      alert("Something went wrong, please try again")      
     }
 
 
@@ -65,8 +68,8 @@ console.log(error)
           id="password"
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          Register
+        <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+        {loading ? 'Creating User...' : 'Register'}
         </button>
       </form>
       <div className="flex gap-2 mt-4">

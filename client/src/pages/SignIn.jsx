@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import {Link} from 'react-router-dom'
 
+
 export default function SignIn() {
   const [formData, setFormData] = useState({})
+  const [loading, setLoading] = useState(false)
+
 
   function handleChange(ev){
     setFormData({
@@ -14,6 +17,7 @@ export default function SignIn() {
 
   async function handleSubmit(ev){
     ev.preventDefault()
+    setLoading(true)
 
     try {
     
@@ -27,11 +31,16 @@ export default function SignIn() {
 
     sendData.json().then((data)=>{
       alert(data.msg)
+      
     })
 
 
+    setLoading(false)
+
+
     } catch (error) {
-console.log(error)      
+      setLoading(false)
+      alert("something went wrong, please try again after sometime")      
     }
 
 
@@ -47,7 +56,7 @@ console.log(error)
 
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <h1 className="text-3xl text-center font-semibold my-7">Register</h1>
+      <h1 className="text-3xl text-center font-semibold my-7">Login</h1>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           className="focus:outline-none border p-3 rounded-lg"
@@ -65,8 +74,9 @@ console.log(error)
           id="password"
           onChange={handleChange}
         />
-        <button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-          Login
+
+        <button disabled={loading} className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+          {loading ? 'Logging in...' : 'Login'}
         </button>
       </form>
       <div className="flex gap-2 mt-4">
