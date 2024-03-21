@@ -8,8 +8,8 @@ export default function CreateForm() {
       number: formContent.length,
       name: `question_${formContent.length}`,
       label: "untitled_question",
-      type: "short_answer",
-      list: [],
+      type: "multichoice",
+      list: [1,2,3],
     };
     setFormContent([...formContent, fields]);
   }
@@ -24,32 +24,48 @@ export default function CreateForm() {
         <div>
           {formContent.map((item, index) => {
             return (
-                <div>
-              <div className="flex justify-between space-y-6 items-center">
-                <div className="flex gap-1" key={item.name}>
-                  <p>{item.number + 1}</p>
-                  <p>{item.label}</p>
-                </div>
-                <div>
-                  <select>
-                    <option value="short_answer">Short Answer</option>
-                    <option value="paragraph">Paragraph</option>
-                    <option value="multichoice">Multichoice</option>
-                  </select>
-                </div>
-              
-              </div>
               <div>
-                {item.type == "short_answer" && <input type="text" placeholder={item.label} />}
-                {item.type == "paragraph" && <textarea placeholder={item.label} />}
-                {item.type == "multichoice" && <input type="text" placeholder={item.label} />}
+                <div className="flex justify-between space-y-6 items-center">
+                  <div className="flex gap-1" key={item.name}>
+                    <p>{item.number + 1}</p>
+                    <p>{item.label}</p>
+                  </div>
+                  <div>
+                    <select>
+                      <option value="short_answer">Short Answer</option>
+                      <option value="paragraph">Paragraph</option>
+                      <option value="multichoice">Multichoice</option>
+                    </select>
+                  </div>
+                </div>
+                <div className="p-3 w-full">
+                  {item.type == "short_answer" && (
+                    <input
+                      className="focus:outline-none border p-3 rounded-lg w-full h-10 shadow-sm"
+                      type="text"
+                      placeholder={item.label}
+                    />
+                  )}
+                  {item.type == "paragraph" && (
+                    <textarea
+                      className="focus:outline-none border p-3 rounded-lg w-full h-40 shadow-sm"
+                      placeholder={item.label}
+                    />
+                  )}
+                  {item.type == "multichoice" && 
+
+
+                  
+                    <select className="focus:outline-none border p-3 rounded-lg w-1/2 shadow-sm">
+                        {item.list.map((fielditems)=>{
+                            <option value={fielditems}>{fielditems}</option>
+                        })}
+                    </select>}
+                </div>
               </div>
-              
-              </div>);
+            );
           })}
         </div>
-
-        
 
         <button
           onClick={addQuestion}
