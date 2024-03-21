@@ -8,8 +8,8 @@ export default function CreateForm() {
     const fields = {
       number: formContent.length,
       name: `question_${formContent.length}`,
-      label: "untitled_question",
-      type: "multichoice",
+      label: "untitled_question (Click to edit)",
+      type: "short_answer",
       list: [1,2,3],
     };
     setFormContent([...formContent, fields]);
@@ -17,14 +17,14 @@ export default function CreateForm() {
 
 
   function questionEdit(questionNumber, questionValue){
-    console.log(questionNumber, questionValue)
+    // console.log(questionNumber, questionValue)
     const formFields = [...formContent]
-    console.log("form field is", formFields)
+    // console.log("form field is", formFields)
     const fieldIndex = formFields.findIndex(f => f.name == questionNumber)
-    console.log(formFields[fieldIndex])
+    // console.log(formFields[fieldIndex])
     formFields[fieldIndex].label = questionValue
     setFormContent(formFields)
-    console.log(formFields)
+    // console.log(formFields)
     
 
   }
@@ -43,11 +43,11 @@ export default function CreateForm() {
             return (
               <div>
                 <div className="flex justify-between space-y-6 items-center">
-                  <div className="flex gap-1" key={item.name}>
-                    <p>{item.number + 1}</p>
+                  <div className="flex gap-2 items-center" key={item.name}>
+                    <p>{`Q${item.number + 1}.`}</p>
                     {
                         isEdit ? 
-                        <input onChange={(e)=>questionEdit(item.name, e.target.value)} className="border p-2" type="text" placeholder={item.label}/>
+                        <input onChange={(e)=>questionEdit(item.name, e.target.value)} onBlur={()=>setisEdit(false)} className="border p-2" type="text" placeholder={item.label}/>
                         :
                         <label onClick={()=>setisEdit(true)} >{item.label}</label>
             
@@ -68,7 +68,7 @@ export default function CreateForm() {
                     <input
                       className="focus:outline-none border p-3 rounded-lg w-full h-10 shadow-sm"
                       type="text"
-                      placeholder={item.label}
+                      placeholder={"Short answer"}
                     />
                   )}
                   {item.type == "paragraph" && (
