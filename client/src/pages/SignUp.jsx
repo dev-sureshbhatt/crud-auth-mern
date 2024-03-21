@@ -14,14 +14,32 @@ export default function SignUp() {
 
   async function handleSubmit(ev){
     ev.preventDefault()
-    console.log("sending fetch request")
-    const sendData = await fetch('http://localhost:4000/api/auth/signup', {
+
+    try {
+    
+      const sendData = await fetch('http://localhost:4000/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
     })
+
+    sendData.json().then((data)=>{
+      alert(data.msg)
+    })
+
+
+    } catch (error) {
+console.log(error)      
+    }
+
+
+
+    
+
+
+
   }
 
 
