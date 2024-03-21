@@ -39,12 +39,15 @@ export default function CreateForm() {
 
   function addMultichoiceFieldOptions(questionNumber, optionValue){
 
+    // setMultichoiceOption("add an option")
     const formFields = [...formContent];
     // console.log("new formfield", formFields, questionNumber, questionType)
     const findIndex = formFields.findIndex((f) => f.name === questionNumber);
     formFields[findIndex].list.push(optionValue)
     setFormContent(formFields);
     console.log(formFields);
+    
+
 
 
 
