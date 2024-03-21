@@ -52,14 +52,6 @@ console.log(error)
         <input
           className="focus:outline-none border p-3 rounded-lg"
           required
-          type="text"
-          placeholder="Display Name"
-          id="displayName"
-          onChange={handleChange}
-        />
-        <input
-          className="focus:outline-none border p-3 rounded-lg"
-          required
           type="email"
           placeholder="Email"
           id="email"

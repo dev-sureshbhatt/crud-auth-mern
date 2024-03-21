@@ -2,17 +2,15 @@ import bcryptjs from 'bcryptjs'
 import User from '../models/user.model.js'
 
 export const signup = async (req, res) => {
-    const {displayName, email, password} = req.body
+    const {email, password} = req.body
     try {
         const hashedPassword = bcryptjs.hashSync(password, 8)
         
-        await User.create({
-            displayName, 
+        await User.create({ 
             email, 
             password: hashedPassword
         })
-        // const isValid = bcryptjs.compareSync('1111', hashedPassword)
-        // console.log(isValid)
+        
 
         res.status(201).json({"msg": "User created successfully"})    
     } catch (error) {
@@ -23,4 +21,36 @@ export const signup = async (req, res) => {
 
     
 
+}
+
+
+
+export const login = async (req,res) => {
+
+    
+    try {
+        
+        const {email, password} = req.body
+        const isUser = await User.findOne({email})
+        if (!isUser) {
+            res.status(401).json({"msg":"User doesn't exist"})
+        }
+
+        else {
+            if(bcryptjs.compareSync(password, isUser.password)){
+            res.status(200).json({"msg":"You are now logged in"})
+            } else res.status(401).json({"msg":"Password is incorrect"})
+        }
+
+        
+
+
+
+        
+            
+    } catch (error) {
+console.log(error)        
+    }
+    
+    
 }
