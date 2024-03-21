@@ -22,7 +22,7 @@ export default function SignIn() {
 
     try {
     
-      const sendData = await fetch('http://localhost:4000/api/auth/signin', {
+      const sendData = await fetch('https://crud-auth-mern.onrender.com/api/auth/signin', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

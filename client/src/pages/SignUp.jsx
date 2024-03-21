@@ -20,7 +20,7 @@ export default function SignUp() {
 
     try {
     
-      const sendData = await fetch('http://localhost:4000/api/auth/signup', {
+      const sendData = await fetch('https://crud-auth-mern.onrender.com/api/auth/signup', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

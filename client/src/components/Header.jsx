@@ -31,6 +31,11 @@ export default function Header() {
               Register
             </li>
           </Link>
+          <Link to={"/create-form"}>
+            <li className="text-slate-700 hover:underline hidden sm:inline">
+              Create Form
+            </li>
+          </Link>
         </ul>
       </div>
     </header>
